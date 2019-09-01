@@ -1,3 +1,9 @@
+export enum MatchResults {
+  HOME = 'H',
+  AWAY = 'A',
+  DRAW = 'D'
+}
+
 export const dateStringToDate = (dateString: string): Date => {
 
   // 28/10/2018
