@@ -1,8 +1,18 @@
 import { CSVFileReader } from './CSVFileReader';
 import { MatchReader } from './MatchReader';
+import { ConsoleReport } from './reportTargets/ConsoleReport';
+import { GamesWonAnalysis } from './analyzers/GamesWonAnalysis';
+import { Summary } from './Summary';
 
 const csvFileReader = new CSVFileReader('football.csv');
 const matchReader = new MatchReader(csvFileReader);
 matchReader.load();
 
-console.log(matchReader.matches)
+
+const summary = new Summary( 
+  new GamesWonAnalysis('Man United'), 
+  new ConsoleReport()
+);
+
+summary.buildAndPrintReport(matchReader.matches);
+
