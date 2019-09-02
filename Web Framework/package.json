@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "description": "A simple js framework using Typescript",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start:db": "json-server -w db.json",
+    "start:parcel": "parcel index.html"
+  },
   "author": "Francisco Herrera",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
   }
 }
