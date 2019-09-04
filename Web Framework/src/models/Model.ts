@@ -1,11 +1,10 @@
 import { Callback } from './Eventing';
 import { AxiosPromise, AxiosResponse } from 'axios';
-import { Attributes } from './Attributes';
 
 interface ModelAttributes<T> {
   set(value: T): void;
   getAll(): T;
-  get<K extends keyof T>(): T[K];
+  get<K extends keyof T>(key: K): T[K];
 }
 
 interface Sync<T> {
@@ -25,14 +24,14 @@ interface HasId {
 export class Model<T extends HasId> {
 
   constructor(
-    private attributes: Attributes<T>,
+    private attributes: ModelAttributes<T>,
     private events: Events,
     private sync: Sync<T>
   ) {}
 
   on = this.events.on;
   trigger = this.events.trigger;
-  get = this.attributes.set;
+  get = this.attributes.get;
 
   set(update: T): void {
     this.attributes.set(update);
