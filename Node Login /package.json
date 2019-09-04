@@ -1,0 +1,22 @@
+{
+  "name": "ts-node-login",
+  "version": "1.0.0",
+  "description": "Implementation of Typescript on a node.js project using express framework",
+  "main": "index.js",
+  "scripts": {
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently npm:start:*"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Francisco Herrera",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.2",
+    "nodemon": "^1.19.2"
+  }
+}
