@@ -12,10 +12,34 @@ interface AppProps {
   deleteTodo: typeof deleteTodo;
 }
 
-class _App extends React.Component<AppProps> {
+interface AppState {
+  fetching: boolean;
+}
+
+class _App extends React.Component<AppProps, AppState> {
+
+  constructor(props: AppProps) {
+    super(props);
+
+    this.state = {
+      fetching: false
+    }
+  }
+
+  componentDidUpdate(prevProps: AppProps): void {
+    console.log(this.state);
+    if(!prevProps.todos.length && this.props.todos.length) {
+      this.setState({
+        fetching: false
+      });
+    }
+  }
 
   clickButtonHandler = (): void => {
     this.props.fetchTodos();
+    this.setState({
+      fetching: true
+    });
   }
 
   clickTodoHandler = (id: number): void => {
@@ -37,6 +61,7 @@ class _App extends React.Component<AppProps> {
     return(
       <div>
         <button onClick={this.clickButtonHandler}>Fetch</button>
+        { this.state.fetching ? <h1>LOADING</h1> : null }
         {this.renderList()}
       </div>
     );
