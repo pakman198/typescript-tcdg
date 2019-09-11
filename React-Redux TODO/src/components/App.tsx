@@ -1,23 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Todo, fetchTodos } from '../actions';
+import { Todo, fetchTodos, deleteTodo } from '../actions';
 import { StoreState } from '../reducers';
 
 interface AppProps {
   todos: Todo[];
-  fetchTodos(): any;
+  // since fetchTodos makes an async action, TS marks an error, that's why the 
+  // annotation is set to be a function, otherwise there's an error on the connect
+  fetchTodos: Function;
+  deleteTodo: typeof deleteTodo;
 }
 
 class _App extends React.Component<AppProps> {
 
-  clickHandler = (): void => {
+  clickButtonHandler = (): void => {
     this.props.fetchTodos();
+  }
+
+  clickTodoHandler = (id: number): void => {
+    this.props.deleteTodo(id);
   }
 
   renderList(): JSX.Element[] {
     return this.props.todos.map((todo: Todo) => {
-      return <div key={todo.id}>{todo.title}</div>
+      return (
+        <div key={todo.id} onClick={ () => this.clickTodoHandler(todo.id) }>
+          {todo.title}
+        </div>
+      );
     });
   }
 
@@ -25,7 +36,7 @@ class _App extends React.Component<AppProps> {
   render() {
     return(
       <div>
-        <button onClick={this.clickHandler}>Fetch</button>
+        <button onClick={this.clickButtonHandler}>Fetch</button>
         {this.renderList()}
       </div>
     );
@@ -40,5 +51,5 @@ const mapStateToProps = (state: StoreState): { todos: Todo[] } => {
 
 export const App = connect(
   mapStateToProps,
-  { fetchTodos } 
+  { fetchTodos, deleteTodo } 
 )(_App);
