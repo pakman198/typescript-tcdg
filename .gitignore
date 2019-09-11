@@ -1,4 +1,10 @@
-.cache/
-dist/
+# dependencies
 node_modules/
+
+# production
+dist/
 build/
+public/
+
+# development
+.cache/
